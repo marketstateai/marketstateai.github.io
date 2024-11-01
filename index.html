@@ -3,130 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transparent Stock Chart</title>
+    <title>Simple Stock Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(to right, #1f1c2c, #928dab);
-            color: #fff;
-        }
-        h1 {
-            font-size: 26px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        #chartContainer {
-            max-width: 900px;
-            width: 90%;
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-    </style>
 </head>
 <body>
+    <canvas id="stockChart" width="600" height="400"></canvas>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById("stockChart").getContext("2d");
 
-<h1>Transparent Stock Price Chart</h1>
-<div id="chartContainer">
-    <canvas id="stockChart"></canvas>
-</div>
+        const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: "Stock Price",
+                backgroundColor: "rgba(0, 123, 255, 0.5)",
+                borderColor: "rgba(0, 123, 255, 1)",
+                data: [120, 125, 130, 115, 140, 135, 150],
+                fill: false,
+            }]
+        };
 
-<script>
-    // Create a gradient for a transparent effect
-    const canvas = document.getElementById('stockChart');
-    const ctx = canvas.getContext('2d');
-    const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
-    gradientFill.addColorStop(0, 'rgba(33, 150, 243, 0.4)'); // Start with a soft blue
-    gradientFill.addColorStop(1, 'rgba(33, 150, 243, 0)');   // Fade to transparent
-
-    // Sample stock data with dates and prices
-    const stockData = {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Stock Price ($)",
-            data: [120, 140, 135, 150, 170, 160, 175, 190, 185, 200, 210, 220],
-            borderColor: "rgba(255, 255, 255, 0.8)", // White line
-            backgroundColor: gradientFill,
-            pointBackgroundColor: "rgba(255, 255, 255, 0.8)",
-            pointBorderColor: "#fff",
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            borderWidth: 2,
-            tension: 0.4,
-            fill: true,
-        }]
-    };
-
-    // Chart configuration for a smooth, transparent line chart
-    const config = {
-        type: 'line',
-        data: stockData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: {
-                        font: { size: 16 },
-                        color: '#ffffff',
-                        padding: 20
+        const config = {
+            type: "line",
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Month"
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Price (USD)"
+                        }
                     }
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(50, 50, 50, 0.7)',
-                    titleFont: { size: 16 },
-                    bodyFont: { size: 14 },
-                    padding: 10,
-                    cornerRadius: 6
-                }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Months',
-                        color: '#ffffff',
-                        font: { size: 14, weight: 'bold' }
-                    },
-                    ticks: { color: '#ffffff' },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Price ($)',
-                        color: '#ffffff',
-                        font: { size: 14, weight: 'bold' }
-                    },
-                    ticks: { color: '#ffffff' },
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                }
-            },
-            animations: {
-                tension: {
-                    duration: 1500,
-                    easing: 'easeInOutElastic',
-                    from: 0.5,
-                    to: 0.1,
-                    loop: false
                 }
             }
-        }
-    };
+        };
 
-    // Render the chart in the canvas element
-    const stockChart = new Chart(
-        document.getElementById('stockChart'),
-        config
-    );
-</script>
-
+        new Chart(ctx, config);
+    });
+    </script>
 </body>
 </html>
