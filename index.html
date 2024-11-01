@@ -3,33 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Price Chart</title>
+    <title>Elegant Stock Price Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #e0f7fa, #ffebee);
-            background-size: cover;
-            color: #333;
+            background: linear-gradient(to right, #1f1c2c, #928dab);
+            color: #fff;
         }
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
+            text-align: center;
         }
         #chartContainer {
-            max-width: 800px;
-            width: 100%;
+            max-width: 900px;
+            width: 90%;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -41,76 +39,24 @@
 </div>
 
 <script>
+    // Create a gradient for the chart fill
+    const canvas = document.getElementById('stockChart');
+    const ctx = canvas.getContext('2d');
+    const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
+    gradientFill.addColorStop(0, 'rgba(33, 150, 243, 0.6)');
+    gradientFill.addColorStop(1, 'rgba(33, 150, 243, 0)');
+
     // Sample stock data with dates and prices
     const stockData = {
-        labels: ["2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
             label: "Stock Price ($)",
-            data: [120, 135, 130, 145, 150, 160],
+            data: [120, 140, 135, 150, 170, 160, 175, 190, 185, 200, 210, 220],
             borderColor: "rgba(33, 150, 243, 1)",
-            backgroundColor: "rgba(33, 150, 243, 0.3)",
-            pointBackgroundColor: "rgba(33, 150, 243, 1)",
-            pointBorderColor: "#fff",
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            tension: 0.4,
-            fill: true,
-        }]
-    };
-
-    // Chart configuration for a smooth line chart
-    const config = {
-        type: 'line',
-        data: stockData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: {
-                        font: { size: 14 },
-                        color: '#333'
-                    }
-                },
-                tooltip: {
-                    enabled: true,
-                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                    titleFont: { size: 16 },
-                    bodyFont: { size: 14 },
-                    padding: 10,
-                    cornerRadius: 6
-                }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Date',
-                        color: '#666',
-                        font: { size: 14 }
-                    },
-                    ticks: { color: '#666' }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Price ($)',
-                        color: '#666',
-                        font: { size: 14 }
-                    },
-                    beginAtZero: false,
-                    ticks: { color: '#666' }
-                }
-            }
-        }
-    };
-
-    // Render the chart in the canvas element
-    const stockChart = new Chart(
-        document.getElementById('stockChart'),
-        config
-    );
-</script>
-
-</body>
-</html>
+            backgroundColor: gradientFill,
+            pointBackgroundColor: "rgba(255, 255, 255, 0.9)",
+            pointBorderColor: "rgba(33, 150, 243, 1)",
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 2,
+            tension: 0.3,
